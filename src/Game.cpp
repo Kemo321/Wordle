@@ -24,10 +24,11 @@ void Game::delete_last()
     if (!this->words[this->row].empty())
     {
         this->words[this->row].pop_back();
+        this->ui->label_26->setText(" ");
     }
     else
     {
-        this->ui->textEdit_26->setText("Cannot delete letter from empty word!");
+        this->ui->label_26->setText("Cannot delete letter from empty word!");
     }
 }
 
@@ -38,10 +39,11 @@ void Game::add_letter(std::string letter)
     if (this->words[this->row].size() < 5)
     {
         this->words[this->row] += letter;
+        this->ui->label_26->setText(" ");
     }
     else
     {
-        this->ui->textEdit_26->setText("Word cannot be longer than 5 letters!");
+        this->ui->label_26->setText("Word cannot be longer than 5 letters!");
     }
 }
 
@@ -66,10 +68,11 @@ void Game::enter()
         if (x != this->rw.words_list.end())
         {
             this->row += 1;
+            this->ui->label_26->setText(" ");
         }
         else
         {
-            this->ui->textEdit_26->setText("Word does not exist!");
+            this->ui->label_26->setText("Word does not exist!");
         }
         if (row == 5)
             this->lost();
@@ -83,21 +86,21 @@ std::string Game::get_correct_word()
 
 void Game::won()
 {
-    this->ui->textEdit_26->setText("Congratulations you have won!");
+    this->ui->label_26->setText("Congratulations you have won!");
     await = true;
 }
 
 void Game::lost()
 {
     QString info = QString("You have lost, the correct word was: %1").arg(QString::fromStdString(this->correct_word));
-    this->ui->textEdit_26->setText(info);
+    this->ui->label_26->setText(info);
     await = true;
 }
 
 void Game::restart()
 {
     this->row = 0;
-    this->correct_word = "ABACK" ;//this->rw.draw();
+    this->correct_word = this->rw.draw();
     for (auto &word : this->words)
         word = "";
     await = false;

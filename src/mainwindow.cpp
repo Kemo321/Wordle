@@ -41,17 +41,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_29, &QPushButton::clicked, this, &MainWindow::RESTART);
 
 
-    std::vector<QTextEdit*> textEdits =
+    std::vector<QLabel*> labels =
         {
-            ui->textEdit, ui->textEdit_2, ui->textEdit_3, ui->textEdit_4, ui->textEdit_5,
-            ui->textEdit_6, ui->textEdit_11, ui->textEdit_22, ui->textEdit_17, ui->textEdit_16,
-            ui->textEdit_7, ui->textEdit_10, ui->textEdit_21, ui->textEdit_18, ui->textEdit_15,
-            ui->textEdit_8, ui->textEdit_23, ui->textEdit_12, ui->textEdit_19, ui->textEdit_14,
-            ui->textEdit_9, ui->textEdit_24, ui->textEdit_25, ui->textEdit_20, ui->textEdit_13
+            ui->label, ui->label_2, ui->label_3, ui->label_4, ui->label_5,
+            ui->label_6, ui->label_7, ui->label_8, ui->label_9, ui->label_10,
+            ui->label_11, ui->label_12, ui->label_13, ui->label_14, ui->label_15,
+            ui->label_16, ui->label_17, ui->label_18, ui->label_19, ui->label_20,
+            ui->label_21, ui->label_22, ui->label_23, ui->label_24, ui->label_25
         };
     this->game.ui = this->ui;
-    this->ui->textEdit_26->setAlignment(Qt::AlignCenter);
-    this->ui->textEdit_26->setStyleSheet("QTextEdit {font-size: 24px;}");
+    this->ui->label_26->setAlignment(Qt::AlignCenter);
+    this->ui->label_26->setStyleSheet("QLabel {font-size: 24px; border: 4px solid black;}");
 }
 
 MainWindow::~MainWindow()
@@ -84,14 +84,14 @@ void MainWindow::on_DELETE_clicked()
 
 void MainWindow::update_game()
 {
-    std::vector<QTextEdit*> textEdits =
-    {
-        ui->textEdit, ui->textEdit_2, ui->textEdit_3, ui->textEdit_4, ui->textEdit_5,
-        ui->textEdit_6, ui->textEdit_11, ui->textEdit_22, ui->textEdit_17, ui->textEdit_16,
-        ui->textEdit_7, ui->textEdit_10, ui->textEdit_21, ui->textEdit_18, ui->textEdit_15,
-        ui->textEdit_8, ui->textEdit_23, ui->textEdit_12, ui->textEdit_19, ui->textEdit_14,
-        ui->textEdit_9, ui->textEdit_24, ui->textEdit_25, ui->textEdit_20, ui->textEdit_13
-    };
+    std::vector<QLabel*> labels =
+        {
+            ui->label, ui->label_2, ui->label_3, ui->label_4, ui->label_5,
+            ui->label_6, ui->label_7, ui->label_8, ui->label_9, ui->label_10,
+            ui->label_11, ui->label_12, ui->label_13, ui->label_14, ui->label_15,
+            ui->label_16, ui->label_17, ui->label_18, ui->label_19, ui->label_20,
+            ui->label_21, ui->label_22, ui->label_23, ui->label_24, ui->label_25
+        };
 
     auto guesses = game.get_guesses();
     std::string correct_word = game.get_correct_word();
@@ -102,23 +102,23 @@ void MainWindow::update_game()
         for (int col = 0; col < guess.size(); ++col)
         {
             QString letter = QString(guess[col]);
-            textEdits[row * 5 + col]->setText(letter);
-            textEdits[row * 5 + col]->setAlignment(Qt::AlignCenter);
+            labels[row * 5 + col]->setText(letter);
+            labels[row * 5 + col]->setAlignment(Qt::AlignCenter);
             if (guess[col] == correct_word[col] && row != game.row)
             {
-            textEdits[row * 5 + col]->setStyleSheet("QTextEdit { color: green; font-size: 32px;}");
+            labels[row * 5 + col]->setStyleSheet("QLabel { color: green; font-size: 32px; border: 4px solid black;}");
             }
             else if (row != game.row)
             {
                 auto x = std::find(correct_word.begin(), correct_word.end(), guess[col]);
                 if (x != correct_word.end())
-                    textEdits[row * 5 + col]->setStyleSheet("QTextEdit { color: yellow; font-size: 32px;}");
+                    labels[row * 5 + col]->setStyleSheet("QLabel { color: yellow; font-size: 32px; border: 4px solid black;}");
                 else
-                    textEdits[row * 5 + col]->setStyleSheet("QTextEdit { color: red; font-size: 32px;}");
+                    labels[row * 5 + col]->setStyleSheet("QLabel { color: red; font-size: 32px; border: 4px solid black;}");
             }
             else
             {
-                textEdits[row * 5 + col]->setStyleSheet("QTextEdit { font-size: 32px;}");
+                labels[row * 5 + col]->setStyleSheet("QLabel { font-size: 32px; border: 4px solid black;}");
             }
         }
     }
@@ -128,4 +128,5 @@ void MainWindow::RESTART()
 {
     this->game.restart();
     this->update_game();
+    this->ui->label_26->setText(" ");
 }
